@@ -25,6 +25,7 @@ std::map<std::string, int> ModelTypeTable = {
 #include "ax_model_ml_sub.hpp"
 
 #include "ax_model_custom.hpp"
+#include "ax_model_clip.hpp"
 
 #include "ax_model_runner_ax620.hpp"
 #include "ax_model_runner_ax650.hpp"
@@ -313,6 +314,13 @@ int ax_model_single_base_t::init(void *json_obj)
     {
         CLASS_NAMES.push_back("unknown");
     }
+    ret = sub_init(json_obj);
+    if (ret)
+    {
+        ALOGE("sub init failed!");
+        return -1;
+    }
+
     return 0;
 }
 
@@ -351,7 +359,7 @@ int ax_model_single_base_t::inference(axdl_image_t *pstFrame, axdl_bbox_t *crop_
     results->bObjTrack = b_track ? 1 : 0;
     if (b_track && tracker)
     {
-        tracker_objs.n_objects = results->nObjSize > TRACK_OBJETCS_MAX_SIZE ? TRACK_OBJETCS_MAX_SIZE : results->nObjSize;
+        tracker_objs.n_objects = MIN(results->nObjSize, TRACK_OBJETCS_MAX_SIZE);
         for (int i = 0; i < tracker_objs.n_objects; i++)
         {
             tracker_objs.objects[i].rect.x = results->mObjects[i].bbox.x;
@@ -365,10 +373,10 @@ int ax_model_single_base_t::inference(axdl_image_t *pstFrame, axdl_bbox_t *crop_
 
         bytetracker_track(tracker, &tracker_objs);
         // printf("%d %d \n", tracker_objs.n_objects, tracker_objs.n_track_objects);
-        results->nObjSize = tracker_objs.n_track_objects > SAMPLE_MAX_BBOX_COUNT ? SAMPLE_MAX_BBOX_COUNT : tracker_objs.n_track_objects;
+        results->nObjSize = MIN(tracker_objs.n_track_objects, SAMPLE_MAX_BBOX_COUNT);
         for (int i = 0; i < results->nObjSize; i++)
         {
-            axdl_object_t *obj = (axdl_object_t *)tracker_objs.objects[i].user_data;
+            axdl_object_t *obj = (axdl_object_t *)tracker_objs.track_objects[i].user_data;
             results->mObjects[i].bbox.x = tracker_objs.track_objects[i].rect.x;
             results->mObjects[i].bbox.y = tracker_objs.track_objects[i].rect.y;
             results->mObjects[i].bbox.w = tracker_objs.track_objects[i].rect.width;
