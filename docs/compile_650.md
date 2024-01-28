@@ -35,9 +35,14 @@ cd ax-pipeline
 
 ```shell
 git submodule update --init
-......
-(TODO)
-......
+mkdir bsp && cd bsp
+wget https://github.com/ZHEQIUSHUI/assets/releases/download/ax650/drm.zip
+mkdir third-party
+unzip drm.zip -d third-party
+mkdir -p msp/out
+ln -s /soc/* msp/out/
+wget https://github.com/ZHEQIUSHUI/assets/releases/download/ax650/sample.zip
+unzip sample.zip -d msp
 cd ..
 ```
 
@@ -47,7 +52,7 @@ cd ..
 cd ..
 mkdir build
 cd build
-cmake -DAXERA_TARGET_CHIP=AX650 -DBSP_MSP_DIR=/soc/ -DSIPY_BUILD=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install ..
+cmake -DAXERA_TARGET_CHIP=AX650 -DBSP_MSP_DIR=$PWD/../bsp/msp/out -DSIPY_BUILD=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install ..
 make $(expr `nproc` - 1)
 make install
 ```

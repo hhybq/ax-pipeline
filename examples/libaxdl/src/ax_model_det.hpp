@@ -148,6 +148,13 @@ protected:
 };
 REGISTER(MT_DET_YOLOV8_SEG, ax_model_yolov8_seg)
 
+class ax_model_yolov8_seg_native : public ax_model_yolov8_seg
+{
+protected:
+    int post_process(axdl_image_t *pstFrame, axdl_bbox_t *crop_resize_box, axdl_results_t *results) override;
+};
+REGISTER(MT_DET_YOLOV8_SEG_NATIVE, ax_model_yolov8_seg_native)
+
 class ax_model_yolov8_pose : public ax_model_yolov5_face
 {
 protected:

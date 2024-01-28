@@ -1601,7 +1601,7 @@ namespace detection
         }
     }
 
-    static void generate_proposals_yolov8_seg_native(int stride, const float *feat, float prob_threshold, std::vector<Object> &objects,
+    static void generate_proposals_yolov8_seg_native(int stride, const float *feat,  const float* feat_seg, float prob_threshold, std::vector<Object> &objects,
                                                      int letterbox_cols, int letterbox_rows, int cls_num = 80, int mask_proto_dim = 32)
     {
         int feat_w = letterbox_cols / stride;
@@ -1609,6 +1609,7 @@ namespace detection
         int reg_max = 16;
 
         auto feat_ptr = feat;
+        auto feat_seg_ptr = feat_seg;
 
         std::vector<float> dis_after_sm(reg_max, 0.f);
         for (int h = 0; h <= feat_h - 1; h++)
@@ -1659,14 +1660,12 @@ namespace detection
                     obj.label = class_index;
                     obj.prob = box_prob;
                     obj.mask_feat.resize(mask_proto_dim);
-                    for (int k = 0; k < mask_proto_dim; k++)
-                    {
-                        obj.mask_feat[k] = feat_ptr[cls_num + 4 * reg_max + k];
-                    }
+                    memcpy(obj.mask_feat.data(), feat_seg_ptr, sizeof(float) * mask_proto_dim);
                     objects.push_back(obj);
                 }
 
-                feat_ptr += (cls_num + 4 * reg_max + mask_proto_dim);
+                feat_ptr += (cls_num + 4 * reg_max);
+                feat_seg_ptr += mask_proto_dim;
             }
         }
     }
