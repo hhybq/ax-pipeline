@@ -33,6 +33,7 @@ extern "C"
         MT_DET_YOLOV8,
         MT_DET_YOLOV8_NATIVE,
         MT_DET_YOLOV8_SEG,
+        MT_DET_YOLOV8_SEG_NATIVE,
         MT_DET_YOLOV8_POSE,
         MT_DET_YOLOV8_POSE_NATIVE,
         MT_DET_YOLO_NAS,
