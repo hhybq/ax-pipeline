@@ -221,6 +221,10 @@ static AX_VOID PrintHelp(char *testApp)
 
 int main(int argc, char *argv[])
 {
+    if (SAMPLE_Check_Bsp_Version() != 0)
+    {
+        return -1;
+    }
     optind = 0;
     gLoopExit = 0;
     g_sample.Init();
@@ -369,10 +373,9 @@ int main(int argc, char *argv[])
             config.n_ivps_fps = 60;
             config.n_ivps_width = SAMPLE_IVPS_ALGO_WIDTH;
             config.n_ivps_height = SAMPLE_IVPS_ALGO_HEIGHT;
-            if (axdl_get_model_type(g_sample.gModels) != MT_SEG_PPHUMSEG && axdl_get_model_type(g_sample.gModels) != MT_SEG_DINOV2)
-            {
-                config.b_letterbox = 1;
-            }
+
+            config.b_letterbox = axdl_get_letterbox_enable(g_sample.gModels);
+
             config.n_fifo_count = 1; // 如果想要拿到数据并输出到回调 就设为1~4
         }
         pipe1.enable = g_sample.bRunJoint;
@@ -426,7 +429,12 @@ int main(int argc, char *argv[])
         for (size_t i = 0; i < pipe_count; i++)
         {
             ALOGN("create pipe-%d", pipelines[i].pipeid);
-            create_pipeline(&pipelines[i]);
+            s32Ret = create_pipeline(&pipelines[i]);
+            if (s32Ret != 0)
+            {
+                ALOGE("create_pipeline failed,s32Ret:0x%x\n", s32Ret);
+                continue;
+            }
             if (pipelines[i].m_ivps_attr.n_osd_rgn > 0)
             {
                 g_sample.pipes_need_osd.push_back(&pipelines[i]);
