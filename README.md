@@ -17,6 +17,7 @@
 
 - [AXera-Pi](https://wiki.sipeed.com/m3axpi)(AX620A)
 - [AXera-Pi Pro](https://wiki.sipeed.com/m4ndock)(AX650N)
+- [AXera-Pi Zero](https://axera-pi-zero-docs-cn.readthedocs.io/zh-cn/latest/index.html)(AX620Q)
 
 ## 快速上手
 
@@ -54,7 +55,6 @@
 ## 联动项目
 
 - [ax-samples](https://github.com/AXERA-TECH/ax-samples) 该项目实现了常见的 深度学习开源算法 在 爱芯元智 的 AI SoC 上的示例代码，方便社区开发者进行快速评估和适配。
-- [ax-models](https://github.com/AXERA-TECH/ax-models) examples 示例中部分预编译好的 NPU 模型
 - NPU 工具链在线文档
   - [Pulsar](https://pulsar-docs.readthedocs.io/zh_CN/latest/)(Support AX630A/AX620A/AX620U)
   - [Pulsar2](https://pulsar-docs.readthedocs.io/zh_CN/latest/)(Support AX650A/AX650N/AX630C/AX620Q)
