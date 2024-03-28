@@ -3,10 +3,16 @@ function(ax_include_link name input_type)
     target_link_libraries(${name} PRIVATE ${OpenCV_LIBS})
 
     target_include_directories(${name} PRIVATE ${CMAKE_SOURCE_DIR}/examples/common/common_pipeline)
-    target_include_directories(${name} PRIVATE ${BSP_MSP_DIR}/../sample/common)
+    
     target_include_directories(${name} PRIVATE ${BSP_MSP_DIR}/include)
     target_include_directories(${name} PRIVATE ${BSP_MSP_DIR}/include/npu_cv_kit)
+    target_include_directories(${name} PRIVATE ${BSP_MSP_DIR}/../sample/common)
     target_link_directories(${name} PRIVATE ${BSP_MSP_DIR}/lib)
+    # new 20e bsp
+    target_include_directories(${name} PRIVATE ${BSP_MSP_DIR}/arm_glibc/include)
+    target_link_directories(${name} PRIVATE ${BSP_MSP_DIR}/arm_glibc/lib)
+    target_include_directories(${name} PRIVATE ${BSP_MSP_DIR}/arm64_glibc/include)
+    target_link_directories(${name} PRIVATE ${BSP_MSP_DIR}/arm64_glibc/lib)
 
     target_link_libraries(${name} PRIVATE pthread dl) # ax620a use this
 
@@ -28,7 +34,7 @@ function(ax_include_link name input_type)
             target_link_libraries(${name} PRIVATE ax_proton ax_3a ax_mipi ax_nt_stream ax_nt_ctrl)
         endif()
     elseif(AXERA_TARGET_CHIP MATCHES "AX620E")
-        target_link_libraries(${name} PRIVATE ax_interpreter ax_sys ax_venc ax_vdec ax_ivps ax_ive ax_engine ax_vo ax_proton ax_ae ax_af ax_awb ax_mipi ax_nt_stream ax_nt_ctrl gomp stdc++fs)
+        target_link_libraries(${name} PRIVATE ax_interpreter ax_sys ax_venc ax_vdec ax_ivps ax_engine ax_proton ax_ae ax_af ax_awb ax_mipi ax_nt_stream ax_nt_ctrl gomp stdc++fs)
 
     elseif(AXERA_TARGET_CHIP MATCHES "AX620A")
         # drm
