@@ -5,13 +5,16 @@
 
 ## 简介
 
-**AX-Pipeline** 由 **[爱芯元智](https://www.axera-tech.com/)** 主导开发。该项目基于 **AXera-Pi** 展示 [ISP 图像处理](https://zh.wikipedia.org/wiki/%E5%9C%96%E5%83%8F%E8%99%95%E7%90%86%E5%99%A8)、**NPU**、**编码**、**显示** 等功能模块软件调用方法，方便社区开发者进行快速评估和二次开发自己的多媒体应用。
+**AX-Pipeline** 由 **社区开发者友情** 开发。该项目基于 **AXera-Pi**系列社区板卡 展示 [ISP 图像处理](https://zh.wikipedia.org/wiki/%E5%9C%96%E5%83%8F%E8%99%95%E7%90%86%E5%99%A8)、**NPU**、**编码**、**显示** 等功能模块软件调用方法，方便社区开发者进行快速评估和二次开发自己的多媒体应用。
 
 ### 已支持芯片
 
 - AX630C/AX620Q
+  - SDK:v1.0.0
 - AX650A/AX650N
+  - SDK:v1.45.0 
 - AX620A/AX620U
+  - SDK:v1.13.0
 
 ### 已支持开发板
 
@@ -48,7 +51,7 @@
 | [sample_multi_demux_ivps_npu_multi_rtsp](examples/sample_multi_demux_ivps_npu_multi_rtsp) | 读取多路 h264/mp4/rtsp 解码，推理模型进行 OSD 后，多路 rtsp 输出 |
 | [sample_demux_ivps_npu_hdmi_vo](examples/sample_demux_ivps_npu_hdmi_vo) | 读取 h264/mp4/rtsp 解码，推理多个模型进行 OSD 后，分屏（分屏数量等于指定模型个数）同时输出到 HDMI 屏幕 |
 
-## [更新日志](docs/update.md)
+## 更新日志
 
 详情请看 [更新日志](docs/update.md)
 
@@ -63,3 +66,7 @@
 
 - Github issues
 - QQ 群: 139953715
+
+## **免责声明**
+
+*本项目仅用于开发者社区技术交流使用，无任何商业交付质量承诺*
